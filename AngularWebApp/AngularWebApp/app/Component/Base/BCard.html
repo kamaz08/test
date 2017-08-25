@@ -1,0 +1,18 @@
+﻿<div *ngIf="bcardProperty">
+    <md-card class="BCard">
+        <md-card-header>
+            <div md-card-avatar class="header-image" style="background-image: '{{bcardProperty.headerImageSrc}}');"></div>
+            <md-card-title>{{bcardProperty.titleText}}</md-card-title>
+            <md-card-subtitle>{{bcardProperty.subtitleText}}</md-card-subtitle>
+        </md-card-header>
+        <img md-card-image src="{{bcardProperty.image}}">
+        <md-card-content>
+            <p>
+                {{bcardProperty.descriptionText}}
+            </p>
+        </md-card-content>
+            <md-card-actions>
+                {{bcardProperty.cardOptionsList}}
+            </md-card-actions>
+    </md-card>
+</div>

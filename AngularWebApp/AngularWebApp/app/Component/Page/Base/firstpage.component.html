@@ -1,0 +1,18 @@
+﻿<md-sidenav-container class="example-container">
+    <md-sidenav #sidenav class="example-sidenav">
+        <md-toolbar class="menu" color="primary">
+            <md-toolbar-row class="menu-row" *ngFor="let item of menuList" routerLink="{{item.router}}" routerLinkActive="example-menu-row-active" >
+                <span>{{item.name}}</span>
+                <span class="example-spacer"></span>
+                <md-icon class="example-icon">verified_user</md-icon>
+            </md-toolbar-row>
+        </md-toolbar>
+    </md-sidenav>
+
+    <div class="example-sidenav-content">
+        <button md-mini-fab class="example-fab" (click)="sidenav.toggle()">
+            <md-icon>add</md-icon>
+        </button>
+        <router-outlet></router-outlet>
+    </div>
+</md-sidenav-container>
