@@ -41,9 +41,10 @@ export class UserComponent implements OnInit {
 
 
     LoadUsers(): void {
+        debugger;
         this.indLoading = true;
         this._userService.get(Global.BASE_USER_ENDPOINT)
-            .subscribe(users => { this.users = users; this.indLoading = false; });
+            .subscribe(users => {debugger;  this.users = users; this.indLoading = false; });
 
     }
 

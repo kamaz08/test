@@ -13,7 +13,7 @@ namespace AngularWebApp.Models.Logic
     {
         private const String URL = @"http://api.icndb.com/jokes/random/2";
         private const String CatURL = @"http://thecatapi.com/api/images/get?format=xml&results_per_page=2";
-        public static List<CardDTO> GetJokes()
+        public static IEnumerable<CardDTO> GetJokes()
         {
             List<String> cats;
             using (var webClient = new System.Net.WebClient())
@@ -29,7 +29,7 @@ namespace AngularWebApp.Models.Logic
                 String json = webClient.DownloadString(URL);
                 example1Model = new JavaScriptSerializer().Deserialize<ResultRest>(json).value;
             }
-            return example1Model.Select((x,y) => new CardDTO(String.Empty, x.categories.Count() == 0 ? "nothing :(" : String.Join(", ", x.categories), x.id.ToString(), cats[y], x.joke, String.Empty)).ToList();
+            return example1Model.Select((x,y) => new CardDTO(String.Empty, x.categories.Count() == 0 ? "nothing :(" : String.Join(", ", x.categories), x.id.ToString(), cats[y], x.joke, String.Empty)).AsEnumerable();
         }
 
         #region RestData

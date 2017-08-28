@@ -22,7 +22,7 @@ namespace AngularWebApp.Controllers
         // GET: api/Card
         public HttpResponseMessage Get()
         {
-            return ToJson(Joke.GetJokes().AsEnumerable());
+            return ToJson(Joke.GetJokes());
         }
 
         // GET: api/Card/5

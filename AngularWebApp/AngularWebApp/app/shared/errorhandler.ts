@@ -1,4 +1,5 @@
-﻿import { ErrorHandler } from '@angular/core';
+﻿import { ErrorHandler, Component } from '@angular/core';
+import { MdDialog } from '@angular/material';
 
 export default class AppErrorHandler extends ErrorHandler {
 
@@ -9,8 +10,13 @@ export default class AppErrorHandler extends ErrorHandler {
     }
 
     handleError(error: any) {
-        var message = error.json().Message;
-        alert(message);
+        alert(error);
         super.handleError(error);
     }
 }
+
+@Component({
+    selector: 'dialog-overview-example-dialog',
+    templateUrl: 'dialog-overview-example-dialog.html',
+})
+export class DialogOverviewExampleDialog { }

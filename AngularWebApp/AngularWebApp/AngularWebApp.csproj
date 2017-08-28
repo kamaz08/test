@@ -615,6 +615,7 @@
     <TypeScriptCompile Include="app\Component\user.component.ts" />
     <TypeScriptCompile Include="app\main.ts" />
     <TypeScriptCompile Include="app\Model\user.ts" />
+    <TypeScriptCompile Include="app\Service\Base\base.service.ts" />
     <TypeScriptCompile Include="app\Service\joke.service.ts" />
     <TypeScriptCompile Include="app\Service\user.service.ts" />
     <TypeScriptCompile Include="app\shared\enum.ts" />
