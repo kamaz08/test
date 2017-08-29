@@ -5,8 +5,12 @@ using Owin;
 using Microsoft.Owin.Security.OAuth;
 using System.Web.Http;
 using AngularWebApp.Authentication;
+using AngularWebApp.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security.Cookies;
 
-[assembly: OwinStartupAttribute(typeof(AngularWebApp.App_Start.Startup))]
 namespace AngularWebApp.App_Start
 {
     public partial class Startup
@@ -18,23 +22,17 @@ namespace AngularWebApp.App_Start
 
         public void ConfigureAuth(IAppBuilder app)
         {
-            app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
+            app.CreatePerOwinContext(() => new AppDbContext());
+            app.CreatePerOwinContext<AppUserManager>(AppUserManager.Create);
+            app.CreatePerOwinContext<RoleManager<AppRole>>((options, context) =>
+                new RoleManager<AppRole>(
+                    new RoleStore<AppRole>(context.Get<AppDbContext>())));
 
-            var myProvider = new MyAuthorizationServerProvider();
-            OAuthAuthorizationServerOptions options = new OAuthAuthorizationServerOptions
+            app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
-                AllowInsecureHttp = true,
-                TokenEndpointPath = new PathString("/token"),
-                AccessTokenExpireTimeSpan = TimeSpan.FromDays(1),
-                Provider = myProvider
-            };
-            app.UseOAuthAuthorizationServer(options);
-            app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
-
-            
-
-            HttpConfiguration config = new HttpConfiguration();
-            WebApiConfig.Register(config);
+                AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
+                LoginPath = new PathString("/Home/Login"),
+            });
         }
     }
 }

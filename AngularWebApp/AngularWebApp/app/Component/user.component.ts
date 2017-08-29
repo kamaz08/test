@@ -41,11 +41,9 @@ export class UserComponent implements OnInit {
 
 
     LoadUsers(): void {
-        debugger;
         this.indLoading = true;
-        this._userService.get(Global.BASE_USER_ENDPOINT)
-            .subscribe(users => {debugger;  this.users = users; this.indLoading = false; });
-
+        this._userService.GetUsers()
+            .subscribe(users => { this.users = users; this.indLoading = false; });
     }
 
     addUser() {
@@ -84,7 +82,7 @@ export class UserComponent implements OnInit {
 
         switch (this.dbops) {
             case DBOperation.create:
-                this._userService.post(Global.BASE_USER_ENDPOINT, formData._value).subscribe(
+                this._userService.AddUser(formData._value).subscribe(
                     data => {
                         if (data == 1) //Success
                         {
@@ -100,7 +98,7 @@ export class UserComponent implements OnInit {
                 );
                 break;
             case DBOperation.update:
-                this._userService.put(Global.BASE_USER_ENDPOINT, formData._value.Id, formData._value).subscribe(
+                this._userService.EditUser(formData._value.Id, formData._value).subscribe(
                     data => {
                         if (data == 1) //Success
                         {
@@ -116,7 +114,7 @@ export class UserComponent implements OnInit {
                 );
                 break;
             case DBOperation.delete:
-                this._userService.delete(Global.BASE_USER_ENDPOINT, formData._value.Id).subscribe(
+                this._userService.DeleteUser(formData._value.Id).subscribe(
                     data => {
                         if (data == 1) //Success
                         {

@@ -1,4 +1,5 @@
 ﻿using AngularWebApp.DBContext;
+using Microsoft.AspNet.Identity.Owin;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -21,35 +22,38 @@ namespace AngularWebApp.Controllers
             return response;
         }
         [HttpGet]
-        public HttpResponseMessage Get2([FromUri] Parametry parameters, string hehe)
-        {
-            //var hehe = new JavaScriptSerializer().Deserialize<List<Parametry>>(parameters);
-            return ToJson(UserDB.TblUser.FirstOrDefault());
-        }
-
-        [HttpGet]
         [AllowAnonymous]
-        public HttpResponseMessage Get()
+        public HttpResponseMessage GetUsers([FromUri] Parametry parameters)
         {
             return ToJson(UserDB.TblUser.AsEnumerable());
         }
+        [HttpPost]
         [AllowAnonymous]
-        public HttpResponseMessage Post([FromBody]TblUser value)
+        public HttpResponseMessage AddUser([FromBody]TblUser value)
         {
             UserDB.TblUser.Add(value);
             return ToJson(UserDB.SaveChanges());
         }
 
-        public HttpResponseMessage Put(int id, [FromBody]TblUser value)
+        [HttpPut]
+        public HttpResponseMessage EditUser(int id, [FromBody]TblUser value)
         {
             UserDB.Entry(value).State = EntityState.Modified;
             return ToJson(UserDB.SaveChanges());
         }
+
+        [HttpDelete]
         [AllowAnonymous]
-        public HttpResponseMessage Delete(int id)
+        public HttpResponseMessage DeleteUser(int id)
         {
             UserDB.TblUser.Remove(UserDB.TblUser.FirstOrDefault(x => x.Id == id));
             return ToJson(UserDB.SaveChanges());
+        }
+
+        private void tempLogin()
+        {
+
+
         }
 
         public class Parametry

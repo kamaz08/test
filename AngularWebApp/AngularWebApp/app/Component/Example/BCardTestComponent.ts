@@ -45,16 +45,14 @@ export class BCardTestComponent {
 
     scrollEvent(event: any) {
         if (this.panel.nativeElement.scrollTop == this.panel.nativeElement.scrollHeight - this.panel.nativeElement.clientHeight) {
-            debugger;
             this.LoadJokes();
-            
         }
     }
 
     LoadJokes(): void {
         this.isLoad = false;
-        this._jokeService.get(Global.BASE_JOKE_ENDPOINT)
+        this._jokeService.GetJoke()
             .subscribe(jokes => { this.bccard = this.bccard.concat(jokes); this.isLoad = true;},
-            error => { });
+            error => {debugger; });
     }
 }

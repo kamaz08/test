@@ -1,2 +1,6 @@
 AngularWebApp/AngularWebApp/node_modules/*
+AngularWebApp/AngularWebApp/bin/*
+AngularWebApp/AngularWebApp/obj/*
+AngularWebApp/AngularWebApp.Tests/bin/*
+AngularWebApp/AngularWebApp.Tests/obj/*
 node_modules/*

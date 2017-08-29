@@ -1,15 +1,14 @@
-﻿import { Injectable } from '@angular/core';
-import { Http, Response, Headers, RequestOptions } from '@angular/http';
+﻿import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
 
-@Injectable()
 export class BaseService {
     constructor(protected _http: Http) { }
 
-    get(url: string, parameters: any): Observable<any> {
+    protected get(url: string, parameters: any): Observable<any> {
+        debugger;
         let para: URLSearchParams = new URLSearchParams();
         for (var item in parameters) {
             para.set(item, parameters[item]);
@@ -19,7 +18,7 @@ export class BaseService {
             .catch(this.handleError);
     }
 
-    post(url: string, model: any): Observable<any> {
+    protected post(url: string, model: any): Observable<any> {
         let body = JSON.stringify(model);
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
@@ -28,7 +27,7 @@ export class BaseService {
             .catch(this.handleError);
     }
 
-    put(url: string, id: number, model: any): Observable<any> {
+    protected put(url: string, id: number, model: any): Observable<any> {
         let body = JSON.stringify(model);
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
@@ -37,7 +36,7 @@ export class BaseService {
             .catch(this.handleError);
     }
 
-    delete(url: string, id: number): Observable<any> {
+    protected delete(url: string, id: number): Observable<any> {
         debugger;
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
@@ -45,9 +44,9 @@ export class BaseService {
             .map((response: Response) => <any>response.json())
             .catch(this.handleError);
     }
-
-    public handleError(error: Response | any) {
-        console.log('err: ', error)
+    private handleError(error: Response | any) {
+        debugger;
+        console.log('Service err: ', error)
         return error;
         // let errMsg: string;
         // debugger;
@@ -61,4 +60,13 @@ export class BaseService {
         // console.error(errMsg);
         // return Observable.throw(errMsg);
     }
+
+    public login(): Observable<any> {
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+        return this._http.get('api/cardapi/login/')
+            .map((response: Response) => { debugger; <any>response.json() })
+            .catch(this.handleError);
+    }
+
 }
