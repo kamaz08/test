@@ -17,22 +17,28 @@ namespace AngularWebApp.App_Start
     {
         public void Configuration(IAppBuilder app)
         {
+            HttpConfiguration config = new HttpConfiguration();
+
             ConfigureAuth(app);
+
+            WebApiConfig.Register(config);
+            app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
+            app.UseWebApi(config);
         }
 
         public void ConfigureAuth(IAppBuilder app)
         {
-            app.CreatePerOwinContext(() => new AppDbContext());
-            app.CreatePerOwinContext<AppUserManager>(AppUserManager.Create);
-            app.CreatePerOwinContext<RoleManager<AppRole>>((options, context) =>
-                new RoleManager<AppRole>(
-                    new RoleStore<AppRole>(context.Get<AppDbContext>())));
-
-            app.UseCookieAuthentication(new CookieAuthenticationOptions
+            OAuthAuthorizationServerOptions OAuthServerOptions = new OAuthAuthorizationServerOptions()
             {
-                AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
-                LoginPath = new PathString("/Home/Login"),
-            });
+                AllowInsecureHttp = true,
+                TokenEndpointPath = new PathString("/api/token"),
+                AccessTokenExpireTimeSpan = TimeSpan.FromDays(1),
+                Provider = new MyAuthorizationServerProvider()
+            };
+
+            // Token Generation
+            app.UseOAuthAuthorizationServer(OAuthServerOptions);
+            app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
         }
     }
 }

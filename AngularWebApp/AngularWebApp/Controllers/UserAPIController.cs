@@ -22,7 +22,6 @@ namespace AngularWebApp.Controllers
             return response;
         }
         [HttpGet]
-        [AllowAnonymous]
         public HttpResponseMessage GetUsers([FromUri] Parametry parameters)
         {
             return ToJson(UserDB.TblUser.AsEnumerable());
