@@ -21,10 +21,12 @@ namespace AngularWebApp.Controllers
             response.Content = new StringContent(JsonConvert.SerializeObject(obj), Encoding.UTF8, "application/json");
             return response;
         }
+
+
         [HttpGet]
-        public HttpResponseMessage GetUsers([FromUri] Parametry parameters)
+        public IHttpActionResult GetUsers([FromUri] Parametry parameters)
         {
-            return ToJson(UserDB.TblUser.AsEnumerable());
+            return Ok(UserDB.TblUser.AsEnumerable());
         }
         [HttpPost]
         [AllowAnonymous]
@@ -47,6 +49,13 @@ namespace AngularWebApp.Controllers
         {
             UserDB.TblUser.Remove(UserDB.TblUser.FirstOrDefault(x => x.Id == id));
             return ToJson(UserDB.SaveChanges());
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IHttpActionResult Parametr(Parametry temp)
+        {
+            return Json(new { status = "error", message ="asdasd" });
         }
 
         private void tempLogin()

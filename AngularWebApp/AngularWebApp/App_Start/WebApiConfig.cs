@@ -23,7 +23,8 @@ namespace AngularWebApp
             );
 
             var jsonFormatter = config.Formatters.OfType<JsonMediaTypeFormatter>().First();
-            jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            jsonFormatter.SerializerSettings.ContractResolver = new DefaultContractResolver();
+            //jsonFormatter.SerializerSettings.ContractResolver = new CamelCaseNamingStrategy();
         }
     }
 }

@@ -16,7 +16,9 @@ var HomeComponent = (function () {
         this._jokeService = _jokeService;
     }
     HomeComponent.prototype.Login = function () {
-        this._jokeService.Login1();
+        this._jokeService.login().subscribe(function (response) {
+            localStorage.setItem('token', response.token_type + " " + response.access_token);
+        }, function (error) { debugger; });
     };
     HomeComponent = __decorate([
         core_1.Component({

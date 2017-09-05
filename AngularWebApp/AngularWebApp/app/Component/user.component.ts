@@ -42,8 +42,9 @@ export class UserComponent implements OnInit {
 
     LoadUsers(): void {
         this.indLoading = true;
-        this._userService.GetUsers()
-            .subscribe(users => { this.users = users; this.indLoading = false; });
+        let params = {a:1,b:2,c:3};
+        this._userService.GetUsers(params)
+            .subscribe(users => {debugger; this.users = users; this.indLoading = false; });
     }
 
     addUser() {

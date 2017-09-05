@@ -14,7 +14,9 @@ var BaseService = (function () {
         for (var item in parameters) {
             para.set(item, parameters[item]);
         }
-        return this._http.get(url, { params: para })
+        var headers = new http_1.Headers({ 'Content-Type': 'application/json', 'Authorization': localStorage.getItem('token') });
+        var options = new http_1.RequestOptions({ headers: headers, params: para });
+        return this._http.get(url, options)
             .map(function (response) { return response.json(); })
             .catch(this.handleError);
     };
@@ -59,10 +61,16 @@ var BaseService = (function () {
         // return Observable.throw(errMsg);
     };
     BaseService.prototype.login = function () {
-        var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        var url = 'api/token';
+        var urlSearchParams = new URLSearchParams();
+        urlSearchParams.append('grant_type', 'password');
+        urlSearchParams.append('username', 'kamaz');
+        urlSearchParams.append('password', 'kamaz1');
+        var body = urlSearchParams.toString();
+        var headers = new http_1.Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
         var options = new http_1.RequestOptions({ headers: headers });
-        return this._http.get('api/cardapi/login/')
-            .map(function (response) { debugger; response.json(); })
+        return this._http.post(url, body, options)
+            .map(function (response) { return response.json(); })
             .catch(this.handleError);
     };
     return BaseService;

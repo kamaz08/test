@@ -32,8 +32,9 @@ var UserComponent = (function () {
     UserComponent.prototype.LoadUsers = function () {
         var _this = this;
         this.indLoading = true;
-        this._userService.GetUsers()
-            .subscribe(function (users) { _this.users = users; _this.indLoading = false; });
+        var params = { a: 1, b: 2, c: 3 };
+        this._userService.GetUsers(params)
+            .subscribe(function (users) { debugger; _this.users = users; _this.indLoading = false; });
     };
     UserComponent.prototype.addUser = function () {
         this.dbops = enum_1.DBOperation.create;

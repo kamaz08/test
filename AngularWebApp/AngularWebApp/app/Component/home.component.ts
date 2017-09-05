@@ -11,6 +11,12 @@ export class HomeComponent {
     constructor(private _jokeService: JokeService) {}
     
     Login() : void{
-        this._jokeService.Login1();
+        this._jokeService.login() .subscribe(response => {
+            localStorage.setItem('token', response.token_type + " " + response.access_token);
+
+
+
+        },
+        error => {debugger; });
     }
 }

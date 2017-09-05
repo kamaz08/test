@@ -13,7 +13,10 @@ export class BaseService {
         for (var item in parameters) {
             para.set(item, parameters[item]);
         }
-        return this._http.get(url, { params: para })
+        let headers = new Headers({ 'Content-Type': 'application/json', 'Authorization' : localStorage.getItem('token')});
+        let options = new RequestOptions({ headers: headers, params: para });
+
+        return this._http.get(url, options)
             .map((response: Response) => <any>response.json())
             .catch(this.handleError);
     }
@@ -62,10 +65,20 @@ export class BaseService {
     }
 
     public login(): Observable<any> {
-        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let url = 'api/token';
+       
+        let urlSearchParams = new URLSearchParams();
+        urlSearchParams.append('grant_type', 'password');
+        urlSearchParams.append('username', 'kamaz');
+        urlSearchParams.append('password', 'kamaz1');
+        let body = urlSearchParams.toString() 
+
+        
+        
+        let headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded'});
         let options = new RequestOptions({ headers: headers });
-        return this._http.get('api/cardapi/login/')
-            .map((response: Response) => { debugger; <any>response.json() })
+        return this._http.post(url, body, options)
+            .map((response: Response) =><any>response.json())
             .catch(this.handleError);
     }
 

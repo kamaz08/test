@@ -32,7 +32,7 @@ namespace AngularWebApp.App_Start
             {
                 AllowInsecureHttp = true,
                 TokenEndpointPath = new PathString("/api/token"),
-                AccessTokenExpireTimeSpan = TimeSpan.FromDays(1),
+                AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(1),
                 Provider = new MyAuthorizationServerProvider()
             };
 
